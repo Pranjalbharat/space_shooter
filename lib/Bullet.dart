@@ -1,7 +1,10 @@
+// ignore: file_names
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:space_shooter/main.dart';
 import 'package:space_shooter/Player.dart';
+import 'dart:async';
 
 class Bullet extends SpriteAnimationComponent with HasGameReference<SpaceShooterGame>{
   Bullet({
@@ -18,13 +21,13 @@ class Bullet extends SpriteAnimationComponent with HasGameReference<SpaceShooter
       'bullet.png',
       SpriteAnimationData.sequenced(amount: 4,
       stepTime: .2,
-      textureSize: Vector2(8,16),),
+      textureSize: Vector2(8,16)),
       );
 
       add(
         RectangleHitbox(
           collisionType: CollisionType.passive,
-        )
+        ),
       );
   }
 
@@ -32,11 +35,11 @@ class Bullet extends SpriteAnimationComponent with HasGameReference<SpaceShooter
   void update(double dt){
     super.update(dt);
 
-    position.y += dt * -500;
+    position.y += dt * (-500);
 
     if(position.y < -height){
       removeFromParent();
     }
   }
-  
+
 }

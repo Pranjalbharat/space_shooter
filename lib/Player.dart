@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:space_shooter/Bullet.dart';
 import 'package:space_shooter/enemy.dart';
 import 'package:space_shooter/main.dart';
+import 'dart:async';
 
 
 class Player extends SpriteAnimationComponent with HasGameReference<SpaceShooterGame> {
@@ -24,17 +25,7 @@ class Player extends SpriteAnimationComponent with HasGameReference<SpaceShooter
   Future<void> onLoad() async{
     await super.onLoad();
 
-    animation = await game.loadSpriteAnimation(
-      'player.png',
-      SpriteAnimationData.sequenced(
-        amount: 4,
-        stepTime: .2,
-        textureSize: Vector2(32,48),),
-    );
-    // sprite = await gameRef.loadSprite('player-sprite.png');
-    position=game.size/2;
-
-    _bulletSpawner = SpawnComponent(
+      _bulletSpawner = SpawnComponent(
       period: .2,
       selfPositioning: true,
       factory: (index) {
@@ -42,7 +33,7 @@ class Player extends SpriteAnimationComponent with HasGameReference<SpaceShooter
           position: position +
               Vector2(
                 0,
-                -height / 2,
+                (-height / 2),
               ),
         );
 
@@ -52,13 +43,25 @@ class Player extends SpriteAnimationComponent with HasGameReference<SpaceShooter
 
     game.add(_bulletSpawner);
 
-    add(
-      SpawnComponent(factory: (index){
-        return Enemy();
-      },
-      period: 1,
-      area: Rectangle.fromLTWH(0,0,size.x,-Enemy.enemySize),)
+    animation = await game.loadSpriteAnimation(
+      'player.png',
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        stepTime: .2,
+        textureSize: Vector2(32,48))
     );
+    // sprite = await gameRef.loadSprite('player-sprite.png');
+    position=game.size/2;
+
+ 
+
+    // add(
+    //   SpawnComponent(factory: (index){
+    //     return Enemy();
+    //   },
+    //   period: 1,
+    //   area: Rectangle.fromLTWH(0,0,size.x,-Enemy.enemySize),)
+    // );
   }
   
   // @override
